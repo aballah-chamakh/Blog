@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<div style="margin-top:100px" >
+{% for project in object_list %}
+<div class='row' style="padding:20px;margin-bottom:15px;background-color:#e3ebf7">
+<div class='col-lg-6'>
+  <img src={{project.image.url}} class="img-fluid" />
+</div>
+<div class="col-lg-6">
+<h1>{{project.title}}</h1>
+<center><button type="button" class="btn btn-warning btn-lg">see more</button></center>
+</div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

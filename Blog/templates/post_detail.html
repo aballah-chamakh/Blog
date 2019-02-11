@@ -1,0 +1,72 @@
+{%  extends './base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+<title>{{object.title}}</title>
+<meta property="og:title" content={{object.title}}>
+<meta property="og:description" content="on Doliot we make it as fun as possible controlling you bulb from anywhere in the world ">
+<meta property="og:image" content={{object.image.url}}>
+<!-- <meta property="og:url" content="http://104.248.71.14/"> -->
+{% endblock %}
+{% block container %}
+<!-- <div class='row'>
+<div class='col-lg-6 offset-lg-3 col-sm-12'>
+<form method='GET' class='form-group row' >
+<div class='col-lg-8'>
+<input placeholder="search here ..."  type='text' name='q' class='form-control' />
+</div>
+<div class='col-lg-4'>
+  <button type='submit' class='btn btn-warning'>search</button>
+</div>
+</form>
+</div>
+</div> -->
+<div class='row' style='padding-top:100px' >
+
+<div class={% if object.course or object.project %}'col-lg-8'{% else %}'col-lg-12'{% endif %} style='margin-bottom:100px' >
+<h3 class='text-warning'>{{object.title}}</h3>
+<hr/>
+<img src='{{object.image.url}}' class='img-fluid' />
+<br/><br/>
+    <div>{{object.description|safe }}</div>
+</div>
+{% if object.course %}
+<div class="col-lg-4 col-sm-12" style='background-color:;padding:10px'>
+<h5  class='text-warning' >playlist of <a href='/courses/{{object.course.id}}'>{{object.course.title}}</a> course</h5>
+<hr>
+<img src="{{object.course.image.url}}" width="100%" style='border-radius:10px 10px 0 0' />
+<ul class="list-group">
+    <!-- <li class="list-group-item active">play list of the course</li> -->
+{% for post in object.course.post_set.all %}
+  <li class={% if post.id == object.id %}"list-group-item  d-flex justify-content-between align-items-center active"{% else %}"list-group-item  d-flex justify-content-between align-items-center"{% endif %}>
+  <a href="/post/{{post.id}}" style={% if post.id == object.id %}'color:white'{% endif %}>{{post.title}}</a>
+    <a href="/post/{{post.id}}" class="btn btn-warning">read</a>
+  </li>
+{% endfor %}
+</ul>
+</div>
+{% elif object.project %}
+<div class="col-lg-4 col-sm-12" style='background-color:;padding:10px'>
+<h5  class='text-warning' >playlist of <a href='/project/{{object.project.id}}'>{{object.project.title}}</a> project</h5>
+<hr>
+<img src="{{object.project.image.url}}" width="100%" style='border-radius:10px 10px 0 0' />
+<ul class="list-group">
+{% for post in object.project.post_set.all %}
+{% if object.project.post_set.count > 1 %}
+  <li class={% if post.id == object.id %}"list-group-item  d-flex justify-content-between align-items-center active"{% else %}"list-group-item  d-flex justify-content-between align-items-center"{% endif %}>
+  <a href="/post/{{post.id}}" style={% if post.id == object.id %}'color:white'{% endif %}>{{post.title}}</a>
+    <a href="/post/{{post.id}}" class="btn btn-warning">read</a>
+  </li>
+{% else %}
+<li class="list-group-item  d-flex justify-content-between align-items-center">
+<a href="/post/{{post.id}}" >{{post.title}}</a>
+  <a href="/post/{{post.id}}" class="btn btn-warning">read</a>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+</div>
+
+{% endblock %}
