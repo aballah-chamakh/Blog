@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% extends 'base.html' %}
+
+{% block head %}
+
+<title>{{project_obj.title}}</title>
+<meta property="og:title" content={{project_obj.title}}>
+<meta property="og:description" content="{{project_obj.description}}">
+<meta property="og:image" content={{project_obj.image.url}}>
+
+{% endblock %}

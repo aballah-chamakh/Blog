@@ -3,6 +3,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from Course.models import Course,Project
 from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
+from .utils import unique_slug_generator
 
 def get_post_order(self):
     if len(Post.objects.all()) == 0 :
@@ -27,16 +28,14 @@ class Post(models.Model):
         ordering = ['-id']
 
 
-
-
 @receiver(post_save, sender=Post)
-def create_user_profile(sender, instance, created, **kwargs):
+def set_post_order_in_the_serie(sender, instance, created, **kwargs):
     if created :
         qs = None
         if instance.project :
             qs = Post.objects.all().filter(project = project)
-
         elif instance.course :
             qs = Post.objects.all().filter(project = project)
         if qs :
             instance.order = len(qs) + 1
+        instance.slug = unique_slug_generator(instance)

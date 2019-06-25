@@ -5,7 +5,22 @@ from .models import Post
 from .forms import PostForm
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from rest_framework import generics
+from .serializers import PostListSerializer,PostDetailSerializer
 # Create your views here.
+
+
+# def post_list_view(request):
+#     projects_objects = post.objects.all()
+#     context = {
+#     'posts_objects':posts_objects
+#     }
+#     return render(request,'posts/post_list.html',context)
+
+def post_detail_view(request,slug):
+    post_obj = Post.objects.get(slug=slug)
+    context = {'post_obj' : post_obj}
+    return render(request,'posts1/post_detail.html',context)
 
 
 class PostListView(ListView):
@@ -56,3 +71,13 @@ class PostUpdateView(UpdateView):
     form_class = PostForm
     template_name = 'post_create.html'
     success_url = '/posts'
+
+
+class PostListApiView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostListSerializer
+
+class PostDetailApiView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+    lookup_field = 'slug'

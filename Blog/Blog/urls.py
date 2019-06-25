@@ -15,7 +15,7 @@ urlpatterns = [
     path('',include(PostUrls)),
     path('',include(CourseUrls)),
     path('',include(PortfolioUrls)),
-    path('',include(CommentUrls)),
+    # path('',include(CommentUrls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
